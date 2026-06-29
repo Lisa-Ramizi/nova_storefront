@@ -1,12 +1,9 @@
-import { ProductCard } from "@/components/product/ProductCard";
-import { mockProduct } from "@/lib/mockProducts";
+import { ProductGrid } from "@/components/product/ProductGrid";
 
 export default function Home() {
-  const { id: _, ...cardProps } = mockProduct;
-
   return (
     <main>
-      <ProductCard {...cardProps} />
+      <ProductGrid />
     </main>
   );
 }

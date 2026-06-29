@@ -10,3 +10,8 @@ export const mockProduct: Product = {
   reviewCount: 0,
   price: 0,
 };
+
+export const mockProducts: Product[] = Array.from({ length: 8 }, (_, index) => ({
+  ...mockProduct,
+  id: String(index + 1),
+}));
