@@ -1,3 +1,12 @@
+import { ProductCard } from "@/components/product/ProductCard";
+import { mockProduct } from "@/lib/mockProducts";
+
 export default function Home() {
-  return <main />;
+  const { id: _, ...cardProps } = mockProduct;
+
+  return (
+    <main>
+      <ProductCard {...cardProps} />
+    </main>
+  );
 }
