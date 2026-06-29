@@ -1,11 +1,11 @@
 import type {
   ApiCategory,
+  ApiCategoriesResponse,
   ApiProduct,
   ApiProductsResponse,
-  Category,
-  ProductsResult,
 } from "@/types/api";
-import type { Product } from "@/types/product";
+import type { Category } from "@/types/category";
+import type { Product, ProductsResult } from "@/types/product";
 
 const API_BASE = "https://dummyjson.com";
 
@@ -67,6 +67,6 @@ export async function getProduct(id: string): Promise<Product> {
 }
 
 export async function getCategories(): Promise<Category[]> {
-  const data = await fetchJson<ApiCategory[]>(`${API_BASE}/products/categories`);
+  const data = await fetchJson<ApiCategoriesResponse>(`${API_BASE}/products/categories`);
   return data.map(mapCategory);
 }

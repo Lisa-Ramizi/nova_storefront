@@ -1,4 +1,6 @@
-import type { Product } from "@/types/product";
+export type ApiProductReview = {
+  rating: number;
+};
 
 export type ApiProduct = {
   id: number;
@@ -9,7 +11,7 @@ export type ApiProduct = {
   discountPercentage: number;
   rating: number;
   thumbnail: string;
-  reviews: { rating: number }[];
+  reviews: ApiProductReview[];
 };
 
 export type ApiProductsResponse = {
@@ -25,12 +27,4 @@ export type ApiCategory = {
   url: string;
 };
 
-export type ProductsResult = {
-  products: Product[];
-  total: number;
-};
-
-export type Category = {
-  slug: string;
-  name: string;
-};
+export type ApiCategoriesResponse = ApiCategory[];
