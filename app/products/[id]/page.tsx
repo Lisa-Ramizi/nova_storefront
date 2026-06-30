@@ -1,9 +1,24 @@
+import { ProductDetail } from "@/components/product/ProductDetail";
+import { getCategories, getProduct } from "@/services/products";
+
 type ProductPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export default async function ProductPage({ params }: ProductPageProps) {
-  await params;
+function formatCategoryName(slug: string): string {
+  return slug
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
 
-  return <main />;
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { id } = await params;
+  const [product, categories] = await Promise.all([getProduct(id), getCategories()]);
+
+  const categoryName =
+    categories.find((category) => category.slug === product.category)?.name ??
+    formatCategoryName(product.category);
+
+  return <ProductDetail product={product} categoryName={categoryName} />;
 }

@@ -12,6 +12,13 @@ export type ApiProduct = {
   rating: number;
   thumbnail: string;
   reviews: ApiProductReview[];
+  images: string[];
+  brand: string;
+  sku: string;
+  warrantyInformation: string;
+  shippingInformation: string;
+  availabilityStatus: string;
+  stock: number;
 };
 
 export type ApiProductsResponse = {

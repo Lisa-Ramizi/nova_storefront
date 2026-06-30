@@ -37,6 +37,13 @@ function mapProduct(apiProduct: ApiProduct): Product {
     rating: apiProduct.rating,
     reviewCount: apiProduct.reviews.length,
     price,
+    images: apiProduct.images,
+    brand: apiProduct.brand,
+    sku: apiProduct.sku,
+    warrantyInformation: apiProduct.warrantyInformation,
+    shippingInformation: apiProduct.shippingInformation,
+    availabilityStatus: apiProduct.availabilityStatus,
+    stock: apiProduct.stock,
     ...(hasDiscount && {
       originalPrice: apiProduct.price,
       discountLabel: `-${Math.round(apiProduct.discountPercentage)}%`,

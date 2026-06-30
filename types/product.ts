@@ -10,6 +10,13 @@ export type Product = {
   price: number;
   originalPrice?: number;
   discountLabel?: string;
+  images?: string[];
+  brand?: string;
+  sku?: string;
+  warrantyInformation?: string;
+  shippingInformation?: string;
+  availabilityStatus?: string;
+  stock?: number;
 };
 
 export type ProductsResult = {
