@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ProductCard } from "@/components/product/ProductCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 import type { Product } from "@/types/product";
@@ -18,7 +19,9 @@ export function ProductGrid({ products }: ProductGridProps) {
 
         return (
           <li key={id}>
-            <ProductCard {...cardProps} />
+            <Link href={`/products/${id}`} className="block h-full">
+              <ProductCard {...cardProps} />
+            </Link>
           </li>
         );
       })}

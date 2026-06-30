@@ -30,7 +30,11 @@ export function ProductCard({
 
         <button
           type="button"
-          onClick={onWishlistClick}
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            onWishlistClick?.();
+          }}
           className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-surface text-foreground-muted transition-colors hover:text-foreground"
           aria-label={`Add ${title} to wishlist`}
         >
@@ -88,7 +92,11 @@ export function ProductCard({
 
       <button
         type="button"
-        onClick={onAddToCart}
+        onClick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          onAddToCart?.();
+        }}
         aria-label={`Add ${title} to cart`}
         className={`mt-auto flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
           inCart

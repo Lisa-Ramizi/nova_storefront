@@ -1,8 +1,12 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { CategoryFilter } from "@/components/ui/CategoryFilter";
+import { Pagination } from "@/components/ui/Pagination";
 import { useProductFilters } from "@/hooks/useProductFilters";
+import { usePagination } from "@/hooks/usePagination";
+import { useSearch } from "@/hooks/useSearch";
 import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
 
@@ -12,8 +16,21 @@ type ProductListingProps = {
 };
 
 export function ProductListing({ products, categories }: ProductListingProps) {
+  const { query } = useSearch();
   const { filteredProducts, selectedCategory, categoryLabels, selectCategory } =
     useProductFilters(products, categories);
+  const { paginatedItems, currentPage, totalPages, setPage } = usePagination(filteredProducts);
+  const filterKey = `${query}-${selectedCategory}`;
+  const previousFilterKey = useRef(filterKey);
+
+  useEffect(() => {
+    if (previousFilterKey.current === filterKey) {
+      return;
+    }
+
+    previousFilterKey.current = filterKey;
+    setPage(1);
+  }, [filterKey, setPage]);
 
   return (
     <main className="space-y-6">
@@ -28,7 +45,10 @@ export function ProductListing({ products, categories }: ProductListingProps) {
           onSelect={selectCategory}
         />
       </section>
-      <ProductGrid products={filteredProducts} />
+
+      <ProductGrid products={paginatedItems} />
+
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} />
     </main>
   );
 }
