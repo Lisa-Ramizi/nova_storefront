@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export const defaultCategories = [
+export const DEFAULT_CATEGORY_LABELS = [
   "All",
   "Smartphones",
   "Laptops",
@@ -21,7 +21,7 @@ type CategoryFilterProps = {
 };
 
 export function CategoryFilter({
-  categories = defaultCategories,
+  categories = DEFAULT_CATEGORY_LABELS,
   selected: selectedProp,
   defaultSelected = categories[0],
   onSelect,

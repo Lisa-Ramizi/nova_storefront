@@ -6,7 +6,11 @@ export function QuantitySelector() {
   const [quantity, setQuantity] = useState(1);
 
   return (
-    <div className="flex h-11 items-center rounded-lg border border-border bg-[#f9fafb]">
+    <div
+      role="group"
+      aria-label="Quantity"
+      className="flex h-11 items-center rounded-lg border border-border bg-[#f9fafb]"
+    >
       <button
         type="button"
         onClick={() => setQuantity((value) => Math.max(1, value - 1))}
@@ -15,7 +19,13 @@ export function QuantitySelector() {
       >
         −
       </button>
-      <span className="min-w-10 text-center text-sm font-medium text-foreground">{quantity}</span>
+      <span
+        className="min-w-10 text-center text-sm font-medium text-foreground"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {quantity}
+      </span>
       <button
         type="button"
         onClick={() => setQuantity((value) => value + 1)}

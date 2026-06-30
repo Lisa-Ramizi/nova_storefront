@@ -2,34 +2,12 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { ImagePlaceholderIcon } from "@/components/ui/icons";
 
 type ProductImageGalleryProps = {
   images: string[];
   alt: string;
 };
-
-function ImagePlaceholderIcon() {
-  return (
-    <svg
-      width="64"
-      height="64"
-      viewBox="0 0 48 48"
-      fill="none"
-      aria-hidden="true"
-      className="text-[#d1d5db]"
-    >
-      <rect x="6" y="10" width="36" height="28" rx="3" stroke="currentColor" strokeWidth="2" />
-      <circle cx="16" cy="20" r="3" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M10 34l10-10 6 6 4-4 8 8"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 export function ProductImageGallery({ images, alt }: ProductImageGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -50,24 +28,24 @@ export function ProductImageGallery({ images, alt }: ProductImageGalleryProps) {
             priority
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            <ImagePlaceholderIcon />
+          <div className="flex h-full w-full items-center justify-center" role="img" aria-label="No product image">
+            <ImagePlaceholderIcon size={64} />
           </div>
         )}
       </div>
 
       {galleryImages.length > 1 ? (
-        <ul className="flex gap-3 overflow-x-auto pb-1">
+        <ul className="flex gap-3 overflow-x-auto pb-1" aria-label="Product image thumbnails">
           {galleryImages.map((image, index) => (
-            <li key={image}>
+            <li key={`${image}-${index}`}>
               <button
                 type="button"
                 onClick={() => setSelectedIndex(index)}
                 className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border bg-[#f3f4f6] ${
                   selectedIndex === index ? "border-primary" : "border-border"
                 }`}
-                aria-label={`View image ${index + 1}`}
-                aria-current={selectedIndex === index}
+                aria-label={`View image ${index + 1} of ${galleryImages.length}`}
+                aria-pressed={selectedIndex === index}
               >
                 <Image
                   src={image}
@@ -76,6 +54,7 @@ export function ProductImageGallery({ images, alt }: ProductImageGalleryProps) {
                   unoptimized
                   className="object-contain p-2"
                   sizes="80px"
+                  aria-hidden="true"
                 />
               </button>
             </li>

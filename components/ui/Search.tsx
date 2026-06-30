@@ -1,55 +1,42 @@
 "use client";
 
 import { useState } from "react";
+import { SearchIcon } from "@/components/ui/icons";
 import { useSearch } from "@/hooks/useSearch";
 
 type SearchProps = {
   className?: string;
 };
 
-function SearchIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      aria-hidden="true"
-      className="shrink-0"
-    >
-      <circle cx="8" cy="8" r="5.25" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M12.5 12.5 16 16"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+type SearchInputProps = {
+  value: string;
+  onChange: (value: string) => void;
+  className?: string;
+  autoFocus?: boolean;
+  id?: string;
+};
 
 function SearchInput({
   value,
   onChange,
   className = "",
   autoFocus = false,
-}: {
-  value: string;
-  onChange: (value: string) => void;
-  className?: string;
-  autoFocus?: boolean;
-}) {
+  id = "product-search",
+}: SearchInputProps) {
   return (
     <div className={`relative ${className}`}>
+      <label htmlFor={id} className="sr-only">
+        Search products
+      </label>
       <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-foreground-muted">
         <SearchIcon />
       </span>
       <input
+        id={id}
         type="search"
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder="Search products"
-        aria-label="Search products"
         autoFocus={autoFocus}
         className="h-10 w-full rounded-lg border border-border bg-[#f9fafb] py-2 pl-10 pr-4 text-sm text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
       />
@@ -65,6 +52,7 @@ export function Search({ className = "" }: SearchProps) {
     <div className={className}>
       {mobileOpen ? (
         <SearchInput
+          id="product-search-mobile"
           value={query}
           onChange={setQuery}
           autoFocus
@@ -75,13 +63,15 @@ export function Search({ className = "" }: SearchProps) {
           type="button"
           onClick={() => setMobileOpen(true)}
           className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-foreground-muted md:hidden"
-          aria-label="Search products"
+          aria-label="Open search"
+          aria-expanded={mobileOpen}
         >
           <SearchIcon />
         </button>
       )}
 
       <SearchInput
+        id="product-search-desktop"
         value={query}
         onChange={setQuery}
         className="hidden md:block md:w-72 lg:w-80"

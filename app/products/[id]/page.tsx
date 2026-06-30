@@ -1,16 +1,10 @@
 import { ProductDetail } from "@/components/product/ProductDetail";
 import { getCategories, getProduct } from "@/services/products";
+import { formatCategoryName } from "@/utils/formatCategoryName";
 
 type ProductPageProps = {
   params: Promise<{ id: string }>;
 };
-
-function formatCategoryName(slug: string): string {
-  return slug
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;

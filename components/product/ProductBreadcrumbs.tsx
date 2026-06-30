@@ -17,7 +17,9 @@ export function ProductBreadcrumbs({ categoryName, productTitle }: ProductBreadc
         <li aria-hidden="true">/</li>
         <li>{categoryName}</li>
         <li aria-hidden="true">/</li>
-        <li className="font-medium text-foreground">{productTitle}</li>
+        <li aria-current="page" className="font-medium text-foreground">
+          {productTitle}
+        </li>
       </ol>
     </nav>
   );
