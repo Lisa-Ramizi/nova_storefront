@@ -13,19 +13,9 @@ type ProductListingProps = {
   categories: Category[];
 };
 
-type ListingState = {
-  searchQuery: string;
-  selectedCategory: string;
-  displayedProducts: Product[];
-};
-
 export function ProductListing({ products, categories }: ProductListingProps) {
   const { query } = useSearch();
-  const [listingState, setListingState] = useState<ListingState>({
-    searchQuery: query,
-    selectedCategory: "All",
-    displayedProducts: products,
-  });
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const categoryLabels = useMemo(
     () => ["All", ...categories.map((category) => category.name)],
@@ -37,33 +27,17 @@ export function ProductListing({ products, categories }: ProductListingProps) {
     [products, query],
   );
 
-  const searchChanged = listingState.searchQuery !== query;
-
-  const displayedProducts = searchChanged
-    ? searchFilteredProducts
-    : listingState.displayedProducts;
-
-  const selectedCategory = searchChanged ? "All" : listingState.selectedCategory;
+  const displayedProducts = useMemo(
+    () => filterProductsByCategory(searchFilteredProducts, selectedCategory, categories),
+    [searchFilteredProducts, selectedCategory, categories],
+  );
 
   function handleCategorySelect(category: string) {
-    if (category === selectedCategory && !searchChanged) {
+    if (category === selectedCategory) {
       return;
     }
 
-    const currentProducts = searchChanged
-      ? searchFilteredProducts
-      : listingState.displayedProducts;
-
-    const nextDisplayed =
-      category === "All"
-        ? searchFilteredProducts
-        : filterProductsByCategory(currentProducts, category, categories);
-
-    setListingState({
-      searchQuery: query,
-      selectedCategory: category,
-      displayedProducts: nextDisplayed,
-    });
+    setSelectedCategory(category);
   }
 
   return (
