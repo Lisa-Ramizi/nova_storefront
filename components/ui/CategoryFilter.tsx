@@ -31,6 +31,10 @@ export function CategoryFilter({
   const selected = selectedProp ?? internalSelected;
 
   function handleSelect(category: string) {
+    if (category === selected) {
+      return;
+    }
+
     if (selectedProp === undefined) {
       setInternalSelected(category);
     }
