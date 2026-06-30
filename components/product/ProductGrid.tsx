@@ -19,7 +19,10 @@ export function ProductGrid({ products }: ProductGridProps) {
 
         return (
           <li key={id}>
-            <Link href={`/products/${id}`} className="block h-full">
+            <Link
+              href={`/products/${id}`}
+              className="block h-full rounded-xl transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+            >
               <ProductCard {...cardProps} />
             </Link>
           </li>

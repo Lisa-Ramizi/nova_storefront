@@ -1,3 +1,4 @@
+import { BackLink } from "@/components/product/BackLink";
 import { ProductBreadcrumbs } from "@/components/product/ProductBreadcrumbs";
 import { ProductImageGallery } from "@/components/product/ProductImageGallery";
 import { QuantitySelector } from "@/components/product/QuantitySelector";
@@ -23,7 +24,12 @@ export function ProductDetail({ product, categoryName }: ProductDetailProps) {
 
   return (
     <main className="space-y-6">
-      <ProductBreadcrumbs categoryName={categoryName} productTitle={product.title} />
+      <BackLink />
+      <ProductBreadcrumbs
+        categoryName={categoryName}
+        categorySlug={product.category}
+        productTitle={product.title}
+      />
 
       <article className="rounded-xl border border-border bg-surface p-4 sm:p-6 lg:p-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
