@@ -2,8 +2,26 @@
 
 import { useState } from "react";
 
-export function QuantitySelector() {
-  const [quantity, setQuantity] = useState(1);
+type QuantitySelectorProps = {
+  value?: number;
+  onChange?: (quantity: number) => void;
+  min?: number;
+};
+
+export function QuantitySelector({ value, onChange, min = 1 }: QuantitySelectorProps) {
+  const [internalQuantity, setInternalQuantity] = useState(min);
+  const isControlled = value !== undefined;
+  const quantity = isControlled ? value : internalQuantity;
+
+  function updateQuantity(nextQuantity: number) {
+    const clamped = Math.max(min, nextQuantity);
+
+    if (!isControlled) {
+      setInternalQuantity(clamped);
+    }
+
+    onChange?.(clamped);
+  }
 
   return (
     <div
@@ -13,7 +31,7 @@ export function QuantitySelector() {
     >
       <button
         type="button"
-        onClick={() => setQuantity((value) => Math.max(1, value - 1))}
+        onClick={() => updateQuantity(quantity - 1)}
         className="flex h-full w-11 items-center justify-center text-foreground-muted transition-colors hover:text-foreground"
         aria-label="Decrease quantity"
       >
@@ -28,7 +46,7 @@ export function QuantitySelector() {
       </span>
       <button
         type="button"
-        onClick={() => setQuantity((value) => value + 1)}
+        onClick={() => updateQuantity(quantity + 1)}
         className="flex h-full w-11 items-center justify-center text-foreground-muted transition-colors hover:text-foreground"
         aria-label="Increase quantity"
       >

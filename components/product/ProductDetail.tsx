@@ -1,8 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import { BackLink } from "@/components/product/BackLink";
 import { ProductBreadcrumbs } from "@/components/product/ProductBreadcrumbs";
 import { ProductImageGallery } from "@/components/product/ProductImageGallery";
 import { QuantitySelector } from "@/components/product/QuantitySelector";
 import { CartIcon, StarIcon } from "@/components/ui/icons";
+import { useCart } from "@/hooks/useCart";
 import type { Product } from "@/types/product";
 import { formatAvailability } from "@/utils/formatAvailability";
 import { formatPrice } from "@/utils/formatPrice";
@@ -13,7 +17,10 @@ type ProductDetailProps = {
 };
 
 export function ProductDetail({ product, categoryName }: ProductDetailProps) {
+  const [quantity, setQuantity] = useState(1);
+  const { addToCart, isInCart } = useCart();
   const images = product.images?.length ? product.images : product.image ? [product.image] : [];
+  const inCart = isInCart(product.id);
 
   const specs = [
     { label: "Brand", value: product.brand },
@@ -82,14 +89,15 @@ export function ProductDetail({ product, categoryName }: ProductDetailProps) {
             </p>
 
             <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <QuantitySelector />
+              <QuantitySelector value={quantity} onChange={setQuantity} />
               <button
                 type="button"
+                onClick={() => addToCart(product, quantity)}
                 aria-label={`Add ${product.title} to cart`}
                 className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 <CartIcon />
-                Add to cart
+                {inCart ? "Add more to cart" : "Add to cart"}
               </button>
               <button
                 type="button"

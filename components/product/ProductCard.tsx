@@ -105,7 +105,7 @@ export function ProductCard({
         }`}
       >
         <CartIcon />
-        Add to cart
+        {inCart ? "In cart" : "Add to cart"}
       </button>
     </article>
   );

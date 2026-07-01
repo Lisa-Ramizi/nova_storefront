@@ -1,3 +1,4 @@
+import { CartLink } from "@/components/layout/CartLink";
 import { Logo } from "@/components/layout/Logo";
 import { Navigation } from "@/components/layout/Navigation";
 import { Search } from "@/components/ui/Search";
@@ -12,7 +13,10 @@ export function Header() {
             <Navigation />
           </div>
         </div>
-        <Search />
+        <div className="flex items-center gap-3">
+          <Search />
+          <CartLink />
+        </div>
       </div>
     </header>
   );

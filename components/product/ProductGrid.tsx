@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { ProductCard } from "@/components/product/ProductCard";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { useCart } from "@/hooks/useCart";
 import type { Product } from "@/types/product";
 
 type ProductGridProps = {
@@ -8,6 +11,8 @@ type ProductGridProps = {
 };
 
 export function ProductGrid({ products }: ProductGridProps) {
+  const { addToCart, isInCart } = useCart();
+
   if (products.length === 0) {
     return <EmptyState />;
   }
@@ -23,7 +28,11 @@ export function ProductGrid({ products }: ProductGridProps) {
               href={`/products/${id}`}
               className="block h-full rounded-xl transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
             >
-              <ProductCard {...cardProps} />
+              <ProductCard
+                {...cardProps}
+                inCart={isInCart(id)}
+                onAddToCart={() => addToCart(product)}
+              />
             </Link>
           </li>
         );
